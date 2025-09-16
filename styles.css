@@ -1,0 +1,175 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0a0a1f;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.music-player {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(13, 12, 26, 0.9);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+    backdrop-filter: blur(5px);
+    width: 90%;
+    max-width: 350px;
+}
+
+.play-pause-btn {
+    background: rgba(163, 116, 255, 0.1);
+    border: 2px solid rgba(163, 116, 255, 0.3);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-pause-btn:hover, .play-pause-btn:active {
+    transform: scale(1.1);
+    background: rgba(163, 116, 255, 0.2);
+    box-shadow: 0 0 15px rgba(163, 116, 255, 0.3);
+}
+
+.play-pause-btn .pause-icon {
+    display: inline;
+}
+
+.play-pause-btn .play-icon {
+    display: none;
+}
+
+.play-pause-btn.paused .pause-icon {
+    display: none;
+}
+
+.play-pause-btn.paused .play-icon {
+    display: inline;
+}
+
+.music-label {
+    color: #a374ff;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-shadow: 0 0 10px rgba(163, 116, 255, 0.5);
+}
+
+/* Resto de los estilos de la carta */
+.card {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(13, 12, 26, 0.8);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 0 50px rgba(138, 43, 226, 0.2);
+    position: relative;
+    overflow: hidden;
+    margin: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.message {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #a374ff;
+    text-shadow: 0 0 10px rgba(163, 116, 255, 0.5);
+    animation: glow 2s infinite alternate;
+}
+
+.main-text {
+    font-size: 1.2rem;
+    color: #c4a8ff;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.letter {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+    margin: 2rem 0;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.floating-hearts {
+    font-size: 1.8rem;
+    margin: 2rem 0;
+    animation: float 3s ease-in-out infinite;
+}
+
+.signature {
+    font-size: 1.3rem;
+    color: #a374ff;
+    margin-top: 2rem;
+    text-shadow: 0 0 10px rgba(163, 116, 255, 0.3);
+}
+
+/* Animaciones y efectos visuales */
+@keyframes glow {
+    from { text-shadow: 0 0 10px #a374ff, 0 0 20px #a374ff; }
+    to { text-shadow: 0 0 20px #a374ff, 0 0 30px #a374ff; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 480px) {
+    .card {
+        width: 95%;
+        padding: 1rem;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .main-text {
+        font-size: 1.1rem;
+    }
+
+    .letter {
+        font-size: 1rem;
+    }
+
+    .floating-hearts {
+        font-size: 1.5rem;
+    }
+
+    .signature {
+        font-size: 1.2rem;
+    }
+}
