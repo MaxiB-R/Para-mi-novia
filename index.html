@@ -8,17 +8,20 @@
 </head>
 <body>
     <div class="music-player">
-        <audio id="background-music" controls loop preload="auto" playsinline webkit-playsinline>
-            <source src="file:///C:/Users/Sahid/Desktop/MP3/Iframe%20Goated%20-%20Star%20Shopping%20(Instrumental)%20%5B9YFZhsPdO5s%5D.mp3" type="audio/mpeg">
+        <audio id="background-music" autoplay loop>
             <source src="../MP3/Iframe Goated - Star Shopping (Instrumental) [9YFZhsPdO5s].mp3" type="audio/mpeg">
             Tu navegador no soporta el elemento de audio.
         </audio>
-        <button id="playPauseBtn" class="play-pause-btn">
-            <span class="play-icon">▶️</span>
-            <span class="pause-icon">⏸️</span>
-        </button>
+        <div id="music-controls" class="music-controls">
+            <button id="playPauseBtn" class="play-pause-btn">
+                <span class="play-icon">▶️</span>
+                <span class="pause-icon">⏸️</span>
+            </button>
+            <p class="music-status">Haz clic aquí para iniciar la música</p>
+        </div>
         <div class="music-label">🌙 Star Shopping (Instrumental) 🌟</div>
     </div>
+
     <div class="stars"></div>
     <div class="card">
         <div class="night-sky">
@@ -51,41 +54,67 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.getElementById('background-music');
-            const playPauseBtn = document.getElementById('playPauseBtn');
+    document.addEventListener('DOMContentLoaded', function() {
+        const audio = document.getElementById('background-music');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const musicStatus = document.querySelector('.music-status');
+        const musicControls = document.getElementById('music-controls');
+
+        // Función para iniciar la música
+        function playMusic() {
+            let playPromise = audio.play();
             
-            // Configuración para dispositivos móviles
-            audio.addEventListener('loadeddata', () => {
-                audio.volume = 1.0;  // Asegurarse que el volumen esté al máximo
-            });
-
-            // Manejar interacción del usuario
-            playPauseBtn.addEventListener('click', () => {
-                if (audio.paused) {
-                    let playPromise = audio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            playPauseBtn.classList.remove('paused');
-                        }).catch(error => {
-                            console.log("Error reproduciendo el audio: ", error);
-                        });
-                    }
-                } else {
-                    audio.pause();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    playPauseBtn.classList.remove('paused');
+                    musicStatus.textContent = 'Música reproduciéndose...';
+                }).catch(error => {
+                    console.log("Autoplay prevented:", error);
                     playPauseBtn.classList.add('paused');
-                }
-            });
+                    musicStatus.textContent = 'Haz clic para reproducir';
+                });
+            }
+        }
 
-            // Intentar reproducir automáticamente
-            document.body.addEventListener('click', function() {
-                if (audio.paused) {
-                    audio.play().catch(function(error) {
-                        console.log("Error de reproducción automática: ", error);
-                    });
-                }
-            }, { once: true });
+        // Intenta reproducir automáticamente
+        playMusic();
+
+        // Manejo del botón de reproducción/pausa
+        playPauseBtn.addEventListener('click', function() {
+            if (audio.paused) {
+                playMusic();
+            } else {
+                audio.pause();
+                playPauseBtn.classList.add('paused');
+                musicStatus.textContent = 'Música pausada';
+            }
         });
+
+        // Intenta reproducir cuando el usuario interactúa con la página
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                playMusic();
+            }
+        }, { once: true });
+
+        // Manejar cuando la música termina
+        audio.addEventListener('ended', function() {
+            playPauseBtn.classList.add('paused');
+            musicStatus.textContent = 'Música terminada';
+        });
+
+        // Manejar cuando la música está reproduciéndose
+        audio.addEventListener('playing', function() {
+            playPauseBtn.classList.remove('paused');
+            musicStatus.textContent = 'Música reproduciéndose...';
+        });
+
+        // Manejar cuando la música está pausada
+        audio.addEventListener('pause', function() {
+            playPauseBtn.classList.add('paused');
+            musicStatus.textContent = 'Música pausada';
+        });
+    });
     </script>
 </body>
 </html>
